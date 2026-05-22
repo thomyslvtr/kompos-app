@@ -1,7 +1,7 @@
 # Aplikasi Manajemen Barang — Docker Compose
 
 **Praktikum Cloud Computing**
-Delpiero Falerio Wafom — 23083000134
+Thomas Damianus — 23083000045
 Universitas Merdeka Malang 2026
 
 ## Deskripsi
