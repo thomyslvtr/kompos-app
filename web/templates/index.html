@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Manajemen Barang</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #f0f2f5;
+            padding: 30px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+        .subtitle { color: #7f8c8d; font-size: 0.9em; margin-bottom: 25px; }
+        .form-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .form-section h2 { font-size: 1em; color: #555; margin-bottom: 12px; }
+        .form-row { display: flex; gap: 10px; align-items: center; }
+        input[type="text"], input[type="number"] {
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95em;
+            flex: 1;
+        }
+        input:focus { outline: none; border-color: #3498db; }
+        button[type="submit"] {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95em;
+            white-space: nowrap;
+        }
+        button[type="submit"]:hover { background: #2980b9; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background: #2c3e50;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.9em;
+        }
+        th:first-child { border-radius: 6px 0 0 0; }
+        th:last-child { border-radius: 0 6px 0 0; }
+        td {
+            padding: 11px 15px;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 0.95em;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #f8f9fa; }
+        .harga { font-weight: 600; color: #27ae60; }
+        .btn-hapus {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+        .btn-hapus:hover { background: #c0392b; }
+        .empty { text-align: center; color: #aaa; padding: 30px; }
+        .badge {
+            background: #3498db;
+            color: white;
+            border-radius: 12px;
+            padding: 2px 9px;
+            font-size: 0.8em;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Aplikasi Manajemen Barang</h1>
+    <p class="subtitle">Delpiero Falerio Wafom — 23083000134 | Cloud Computing Praktikum</p>
+
+    <div class="form-section">
+        <h2>Tambah Barang</h2>
+        <form action="/tambah" method="POST">
+            <div class="form-row">
+                <input type="text" name="nama" placeholder="Nama barang..." required>
+                <input type="number" name="harga" placeholder="Harga (Rp)" required min="1">
+                <button type="submit">Tambah</button>
+            </div>
+        </form>
+    </div>
+
+    <h2 style="font-size:1em; color:#555; margin-bottom:12px;">
+        Daftar Barang
+        <span class="badge">{{ barang_list|length }} item</span>
+    </h2>
+
+    {% if barang_list %}
+    <table>
+        <thead>
+            <tr><th>ID</th><th>Nama</th><th>Harga</th><th>Aksi</th></tr>
+        </thead>
+        <tbody>
+        {% for b in barang_list %}
+            <tr>
+                <td>{{ b.id }}</td>
+                <td>{{ b.nama }}</td>
+                <td class="harga">Rp{{ "{:,}".format(b.harga) }}</td>
+                <td>
+                    <form action="/hapus/{{ b.id }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn-hapus">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty">Belum ada barang. Silakan tambahkan!</div>
+    {% endif %}
+</div>
+</body>
+</html>
